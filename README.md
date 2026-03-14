@@ -6,6 +6,7 @@ An automated workflow built with n8n and AI to scrape LinkedIn profiles in Saudi
 مشروع أتمتة كامل لاستخراج بيانات LinkedIn وتخزينها في Google Sheets باستخدام n8n والذكاء الاصطناعي.
 
 
+
 # 🚀 AI LinkedIn Scraper
 
 
