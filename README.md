@@ -1,30 +1,28 @@
 # -linkedin-scraper.
 An automated workflow built with n8n and AI to scrape LinkedIn profiles in Saudi Arabia or from any country and structure the data into JSON/Google Sheets
 أتمتة استخراج بيانات LinkedIn باستخدام AI و n8n
+# 🚀 AI-Powered LinkedIn Scraper
 
-# 🚀 LinkedIn Automation Project
+مشروع أتمتة كامل لاستخراج بيانات LinkedIn وتخزينها في Google Sheets باستخدام n8n والذكاء الاصطناعي.
 
-هذا المشروع يقوم بأتمتة استخراج بيانات LinkedIn باستخدام AI و n8n.
+---
 
 ## 📸 Workflow Preview
-توضح الصورة أدناه مسار العمل الكامل (Workflow):
-
-![Workflow Setup](Screenshot%202026-03-14%20175813.png)
+<img src="Screenshot 2026-03-14 175813.png" width="100%" alt="Workflow Setup">
 
 ---
 
-## 📊 البيانات المستخرجة
-هنا تظهر مخرجات البيانات بعد التنظيف:
-
-![Results Output](image_2026-03-14_172134639.png)
+## 📊 Data Output
+<img src="image_2026-03-14_172456221.png" width="100%" alt="Results Output">
 
 ---
 
-## 🛠️ كيف يعمل؟
-1. **AI Node**: يحلل المسمى الوظيفي.
-2. **HTTP Request**: يبحث في LinkedIn عبر SerpApi.
-3. **Google Sheets**: يحفظ النتائج تلقائياً.
+## 🛠️ شرح سريع
+1. **AI Node**: تحويل لغة البشر لبيانات بحث.
+2. **HTTP Request**: سحب النتائج من SerpApi.
+3. **Google Sheets**: حفظ البيانات تلقائياً.
 
+هذا المشروع يقوم بأتمتة استخراج بيانات LinkedIn باستخدام AI و n8n.
 هل فكرت يوماً في الوقت الضائع في البحث اليدوي عن الكوادر المهنية؟ قمت بتطوير حل ذكي بالكامل لأتمتة هذه العملية!
 
 ✅ ماذا يفعل هذا الـ Workflow؟
