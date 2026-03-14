@@ -8,8 +8,6 @@ An automated workflow built with n8n and AI to scrape LinkedIn profiles in Saudi
 
 # 🚀 AI LinkedIn Scraper
 
-## 📸 Workflow Preview
-<img src="workflow.png" width="100%">
 
 ---
 
