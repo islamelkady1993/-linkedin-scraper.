@@ -1,0 +1,223 @@
+{
+  "name": "linkedin",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -528,
+        -144
+      ],
+      "id": "15fb8d9e-cb5e-4138-9b68-0229b2220354",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "= \"Parse the user query and return a valid JSON object with these exact keys: \njobtitle\n, social \n, location.\nIf a value is missing, return an empty string.\""
+            },
+            {
+              "content": "={{ JSON.stringify($json.query) }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        -160
+      ],
+      "id": "cdec5854-dbd2-4a73-8bc7-daf036cb67bc",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "iz0UmB4wiHPcrHPH",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://serpapi.com/search.json?q=site:linkedin.com/in/ \"{{ $json.jobtitle }}\" \"{{ $json.location }}\"&api_key=a59f3ff6d36947dad262b09f12febc44dc697eb9d33b8e840f3fe55c99f701e4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        -176
+      ],
+      "id": "e0bd958d-316e-47a6-bca0-b3ebd9b67359",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": " // 1. استخراج النص من المسار الصحيح\nconst rawText = $input.item.json.output[0].content[0].text;\n\n// 2. تنظيف النص من علامات الـ Markdown\nconst cleanJson = rawText.replace(/```json|```/g, \"\").trim();\n\ntry {\n    const data = JSON.parse(cleanJson);\n    \n    // 3. إرجاع البيانات بالخانات الجديدة (تبديل industry بـ social)\n    return {\n        jobtitle: data.jobtitle || \"N/A\",\n        social: data.social || \"N/A\", // هنا غيرنا industry لـ social\n        location: data.location || \"N/A\"\n    };\n} catch (e) {\n    return {\n        error: \"Parsing Failed\",\n        raw_content: rawText,\n        debug_message: e.message\n    };\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        -160
+      ],
+      "id": "7acba9af-921d-4655-b46c-f2941392b9c9",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": " // الوصول للبيانات\nconst data = $input.item.json;\n// البحث في النتائج العضوية أو المقترحة\nconst organic = data.organic_results || [];\nconst related = data.related_searches || [];\n\n// دمج الكل في قائمة واحدة\nconst allResults = [...organic, ...related];\n\nif (allResults.length === 0) {\n  return [{\n    json: {\n      message: \"جوجل لم يرجع أي نتائج. جرب تغيير جملة البحث (Query)\",\n      status: data.search_information?.query_displayed || \"Empty\"\n    }\n  }];\n}\n\n// استخراج الروابط\nreturn allResults.map(item => {\n  return {\n    json: {\n      url: item.link,\n      title: item.title || item.query,\n      source: \"SerpApi\"\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        32
+      ],
+      "id": "31ab774a-4144-4901-9714-5259b42dc6c4",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Ysq_BwxvUEOgGU639fcOtjWdyXRPjx5pcYyrVzqVPBo",
+          "mode": "list",
+          "cachedResultName": "linked in urls",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ysq_BwxvUEOgGU639fcOtjWdyXRPjx5pcYyrVzqVPBo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "الورقة1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ysq_BwxvUEOgGU639fcOtjWdyXRPjx5pcYyrVzqVPBo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "urls": "={{ $json.url }} "
+          },
+          "matchingColumns": [
+            "urls"
+          ],
+          "schema": [
+            {
+              "id": "urls",
+              "displayName": "urls",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        464,
+        -32
+      ],
+      "id": "b6b95a8b-1dee-45d7-bbeb-f1ec80cd72ef",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rP2oXgF9dkvEnZRv",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "00b9a7d5-b53b-42f6-8e0c-6f8d511bcab0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e79dc5dd60f2c76988e9b35a188a4959dda156e9aee74100e41aa609aed7c04"
+  },
+  "id": "Nn1svqrgtf09FX3Y",
+  "tags": []
+}
