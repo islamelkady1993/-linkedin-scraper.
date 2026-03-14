@@ -2,6 +2,8 @@
 An automated workflow built with n8n and AI to scrape LinkedIn profiles in Saudi Arabia or from any country and structure the data into JSON/Google Sheets
 أتمتة استخراج بيانات LinkedIn باستخدام AI و n8n
 
+
+
 هل فكرت يوماً في الوقت الضائع في البحث اليدوي عن الكوادر المهنية؟ قمت بتطوير حل ذكي بالكامل لأتمتة هذه العملية!
 
 ✅ ماذا يفعل هذا الـ Workflow؟
