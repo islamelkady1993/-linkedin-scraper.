@@ -17,9 +17,7 @@ An automated workflow built with n8n and AI to scrape LinkedIn profiles in Saudi
 هذا الحل يوفر ساعات من العمل اليدوي ويضمن دقة عالية في الوصول للجمهور المستهدف (مثل الصيادلة في السعودية كما في المثال).
 
 🔗 رابط المشروع على GitHub:
-[حط لينك المستودع بتاعك هنا]
-
-English Version:
+english Version:
 
 🚀 LinkedIn Data Extraction Automation via AI & n8n
 
